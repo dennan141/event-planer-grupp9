@@ -2,12 +2,11 @@
 # Requirements for Barber Shop Booking System
 
 ## Product Description
-
-The Barber Shop Booking System is a web application that allows users to book appointments with barbers at a local barber shop. Users can view available time slots, select a barber, and confirm their booking. The system should provide an easy and intuitive way for users to schedule appointments and manage their bookings. The application should be responsive and user-friendly to accommodate users on both desktop and mobile devices.
+Event calendar where event planners can add events with time, date, and descriptions.
 
 ## Functional Requirements
 
-1. Users can view a list of available time slots for each barber.
-2. Users can select a time slot and book an appointment with a specific barber.
-3. Users can view their upcoming appointments and cancel or reschedule bookings.
-4. ...
+1. Add events, view events, and remove them. Update?
+2. Events should include start date/time and end date/time along with a description.
+3. IndexedDB (idb?) is used to store event data in a database.
+4. SessionStorage is used to store temporary data such as recent selections, activity, filtering, etc.
