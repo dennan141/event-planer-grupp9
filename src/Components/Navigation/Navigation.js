@@ -2,6 +2,9 @@ import Link from "next/link";
 import styles from "./Navigation.module.css"
 
 export default function Navigation() {
+  
+  // ! When adding more Links pls increment CSS -> .Grid -> 
+  // ! grid-template-columns first param ONE for each new Link.
   return (
     <nav className={styles.grid}>
       <Link href="/" className={styles.card}>
