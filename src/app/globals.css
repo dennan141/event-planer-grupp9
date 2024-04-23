@@ -73,6 +73,14 @@
   }
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -94,6 +102,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
 
 a {
   color: inherit;

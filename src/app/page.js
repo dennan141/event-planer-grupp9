@@ -3,9 +3,9 @@ import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <div>
+    <>
+      <div>
+        <div className={styles.description}>
           <a
             href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
             target="_blank"
@@ -34,16 +34,6 @@ export default function Home() {
           priority
         />
       </div>
-
-{/* // * Navigation så länge */}
-      <div className={styles.grid}>
-        <a href="/" className={styles.card}>
-          <h2>
-            Hem navigation <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-      </div>
-    </main>
+    </>
   );
 }
