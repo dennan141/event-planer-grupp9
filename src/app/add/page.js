@@ -1,6 +1,9 @@
 import Form from "@/Components/Form/Form";
 
 export default function addPage() {
+
+
+
   return (
     <>
       <div className="container items-center">
