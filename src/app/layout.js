@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "/tailwind.css"
 import Navigation from "@/Components/Navigation/Navigation";
-import styles from "./globals.css";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +15,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <Navigation />
-        <main className="main">{children}</main>
+        <main className="main">
+          {children}</main>
       </body>
     </html>
   );
