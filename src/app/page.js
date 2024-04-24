@@ -1,32 +1,36 @@
+"use client";
 import Image from "next/image";
 import "/tailwind.css";
+import EventTable from "@/Components/Events/EventsTable";
+import EventRow from "@/Components/Events/EventsRow";
+import Data from "@/Components/DummyData/Data";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [dummyData, setDummyData] = useState([]);
+  const [listOfEventRows, setListOfEventRows] = useState()
+
+  useEffect(() => {
+    setDummyData(Data);
+  }, []);
+
+  useEffect(() => {
+    const list = dummyData.map((event) => (
+      <EventRow event={event} />
+    ));
+    console.log(dummyData)
+    setListOfEventRows(list)
+  }, [dummyData]);
+
+
+
+  
   return (
     <>
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 2 */}
-            <tr className="hover">
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-            </tr>
-            {/* row 3 */}
-          </tbody>
-        </table>
-      </div>
+
+      <EventTable
+        eventsRowList = {dummyData}
+      />
     </>
   );
 }
