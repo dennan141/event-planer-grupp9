@@ -1,33 +1,38 @@
-import openDB from "idb";
+import { openDB } from "idb";
 
-async function createDatabase() {
+
+//TODO: #12 Consider changing to loading the dummy data in createDatabase -> if
+export async function createDatabase() {
   //Using params name, version and functions ?
-  const db = await openDB("myDatabase", 1, {
+  const dbPromise = await openDB("myDatabase", 1, {
     upgrade(db) {
       if (!db.objectStoreNames.contains("events")) {
         db.createObjectStore("events", {
           keyPath: "id",
           autoIncrement: true,
-          title: "No Title",
-          description: "No Description",
-          date: "No Date"
         });
       }
     },
   });
-  return db;
+  return dbPromise;
 }
 
+// GET a value by key from the database
 export async function get(key) {
-  return (await db).get("testKeyBooks", key);
+  const db = await createDatabase();
+  return db.get("events", key);
 }
 
-export async function set(key, val) {
-  return (await dbPromise).put("keyval", val, key);
+// SET a value with a key in the database
+export async function set(val) {
+  const db = await createDatabase();
+  return db.put("events", val);
 }
 
+// GET all keys from the database
 export async function keys() {
-  return (await dbPromise).getAllKeys("keyval");
+  const db = await createDatabase();
+  return db.getAllKeys("events");
 }
 
 export default createDatabase;
