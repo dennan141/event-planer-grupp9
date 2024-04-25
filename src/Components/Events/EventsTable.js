@@ -1,9 +1,21 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+
 export default function EventTable({ eventsRowList }) {
+  const router = useRouter();
+
   /* Handle the click of an event row */
   const handleRowClick = (event) => {
-    console.log(event)
+    // ? Handle event here
+
+    //redirect(`/event/${event.id}`); // Navigate to view event page
+
+    console.log(event);
+
+    router.push(`/event/${event.id}`)
   };
 
   return (

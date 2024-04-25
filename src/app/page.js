@@ -1,11 +1,12 @@
 "use client";
-import Image from "next/image";
 import "/tailwind.css";
 import EventTable from "@/Components/Events/EventsTable";
 import Data from "@/Components/DummyData/Data";
 import { useEffect, useState } from "react";
+import Database from "@/Components/IndexedDb/Database"
 
 export default function Home() {
+  const db = Database()
   const [dummyData, setDummyData] = useState([]);
 
   useEffect(() => {
