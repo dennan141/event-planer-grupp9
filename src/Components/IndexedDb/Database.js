@@ -1,6 +1,5 @@
 import { openDB } from "idb";
-import DummyData from '@/Components/DummyData/Data.json'
-
+import DummyData from "@/Components/DummyData/Data.json";
 
 //TODO: #12 Consider changing to loading the dummy data in createDatabase -> if
 export async function createDatabase() {
@@ -16,8 +15,8 @@ export async function createDatabase() {
     },
   });
   /* Populate with dummy Data */
-  DummyData.forEach(dummyEvent => {
-    dbPromise.put("events", dummyEvent)
+  DummyData.forEach((dummyEvent) => {
+    dbPromise.put("events", dummyEvent);
   });
   return dbPromise;
 }
@@ -38,6 +37,18 @@ export async function set(val) {
 export async function keys() {
   const db = await createDatabase();
   return db.getAllKeys("events");
+}
+
+export async function getAllEvents() {
+  const db = await createDatabase();
+  const allKeys = await db.getAllKeys("events");
+  const allEvents = [];
+
+  for (const key of allKeys) {
+    const event = await db.get("events", key);
+    allEvents.push(event);
+  }
+  return allEvents;
 }
 
 export default createDatabase;

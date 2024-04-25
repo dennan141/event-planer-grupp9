@@ -10,9 +10,14 @@ export default function Home() {
   const [eventData, setEventData] = useState([]);
 
   useEffect(() => {
-    
+    async function fetchData() {
+      setEventData(await Database.getAllEvents());
+      console.log("Data fetched");
+    }
+    fetchData();
   }, []);
 
+  // * Ready rendered page
   return (
     <>
       <EventTable eventsRowList={eventData} />

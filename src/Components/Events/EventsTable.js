@@ -10,11 +10,7 @@ export default function EventTable({ eventsRowList }) {
   /* Handle the click of an event row */
   const handleRowClick = (event) => {
     // ? Handle event here
-
-    //redirect(`/event/${event.id}`); // Navigate to view event page
-
     console.log(event);
-
     router.push(`/event/${event.id}`)
   };
 
