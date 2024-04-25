@@ -1,5 +1,7 @@
 import { openDB } from "idb";
 
+
+//TODO: #12 Consider changing to loading the dummy data in createDatabase -> if
 export async function createDatabase() {
   //Using params name, version and functions ?
   const dbPromise = await openDB("myDatabase", 1, {

@@ -9,9 +9,6 @@ export default function Home() {
   Database.createDatabase();
   const [eventData, setEventData] = useState(DummyData);
 
-  useEffect(() => {
-    //setEventData(Data);
-  }, []);
 
   useEffect(() => {
     if (eventData.length > 0) {
