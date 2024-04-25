@@ -1,25 +1,27 @@
 "use client";
 import "/tailwind.css";
 import EventTable from "@/Components/Events/EventsTable";
-import Data from "@/Components/DummyData/Data";
+import DummyData from "./../Components/DummyData/Data.json"
 import { useEffect, useState } from "react";
-import Database from "@/Components/IndexedDb/Database"
+import * as Database from "@/Components/IndexedDb/Database";
 
 export default function Home() {
-  const db = Database()
-  const [dummyData, setDummyData] = useState([]);
+  Database.createDatabase();
+  const [eventData, setEventData] = useState(DummyData);
 
   useEffect(() => {
-    setDummyData(Data);
+    //setEventData(Data);
   }, []);
 
   useEffect(() => {
-    console.log(dummyData);
-  }, [dummyData]);
+    if (eventData.length > 0) {
+      Database.set(eventData[0]);
+    }
+  }, [eventData]);
 
   return (
     <>
-      <EventTable eventsRowList={dummyData} />
+      <EventTable eventsRowList={eventData} />
     </>
   );
 }
