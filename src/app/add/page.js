@@ -1,8 +1,8 @@
+"use client"
 import Form from "@/Components/Form/Form";
-
 export default function addPage() {
 
-
+  
 
   return (
     <>

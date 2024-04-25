@@ -1,10 +1,12 @@
 "use client";
 import * as db from "@/Components/IndexedDb/Database.js";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useParams } from "next/navigation";
 
 export default function Form() {
   const router = useRouter();
-
+  const pathname = usePathname();
+  const params = useParams();
+  // * ----------- ADD --------------
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -12,12 +14,19 @@ export default function Form() {
     const newEventDescription = event.target.Description.value;
     const newEventDate = event.target.Date.value;
 
-    const newEvent = {
+    let newEvent = {
       title: newEventTitle,
       description: newEventDescription,
       date: newEventDate,
     };
-    //Add event to database
+    if (!pathname === "/add") {
+      newEvent = {
+        title: newEventTitle,
+        description: newEventDescription,
+        date: newEventDate,
+        id: params,
+      };
+    }
     db.set(newEvent);
     router.push("/");
   };
