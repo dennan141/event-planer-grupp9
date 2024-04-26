@@ -33,12 +33,20 @@ export async function set(val) {
   return db.put("events", val);
 }
 
+export async function updateEvent(val, key) {
+  const db = await createDatabase();
+  return db.put("events", val, key);
+}
 // GET all keys from the database
 export async function keys() {
   const db = await createDatabase();
   return db.getAllKeys("events");
 }
-
+// REMOVE a value with a key in the databse
+export async function deleteEvent(key) {
+  const db = await createDatabase();
+  return db.delete("events", key);
+}
 export async function getAllEvents() {
   const db = await createDatabase();
   const allKeys = await db.getAllKeys("events");
@@ -50,5 +58,6 @@ export async function getAllEvents() {
   }
   return allEvents;
 }
+
 
 export default createDatabase;

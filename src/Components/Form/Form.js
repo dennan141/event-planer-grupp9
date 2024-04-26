@@ -19,15 +19,18 @@ export default function Form() {
       description: newEventDescription,
       date: newEventDate,
     };
-    if (!pathname === "/add") {
-      newEvent = {
-        title: newEventTitle,
-        description: newEventDescription,
-        date: newEventDate,
-        id: params,
-      };
+    if (pathname === "/add") {
+      db.set(newEvent);
+    } else {
+      db.get(parseInt(params.eventId)).then((foundEvent) => {
+        console.log("Hittad: " + foundEvent);
+        foundEvent.date = newEvent.date;
+        foundEvent.title = newEvent.title;
+        foundEvent.description = newEvent.description;
+
+        db.set(foundEvent);
+      });
     }
-    db.set(newEvent);
     router.push("/");
   };
 
