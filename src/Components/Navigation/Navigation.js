@@ -11,7 +11,7 @@ export default function Navigation() {
       </Link>
       <ul
         tabIndex={0}
-        className="menu menu-sm mt-3 z-[1] p-2 bg-base-200 rounded-box w-52"
+        className="m-2 menu menu-sm mt-3 z-[1] p-2 bg-base-200 rounded-box w-52"
       >
         <li>
           <Link href="/add"> Skapa nytt event</Link>

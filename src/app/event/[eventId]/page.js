@@ -53,8 +53,9 @@ export default function EventViewPage({ params }) {
 
   return (
     <>
-      {foundEvent ? (
-        <div className="card w-96 bg-accent  text-primary-content">
+// - validation fixes
+    
+        {/* <div className="card w-96 bg-accent  text-primary-content">
           <div className="card-body">
             {!isEditing ? (
               <>
@@ -70,6 +71,8 @@ export default function EventViewPage({ params }) {
                 onSave={handleSaveEdit}
               />
             )}
+           
+            
             <div className="card-actions justify-around mt-4">
               <DeleteButton eventId={foundEvent.id} />
               {!isEditing && (
@@ -77,7 +80,51 @@ export default function EventViewPage({ params }) {
               )}
               {isEditing && (
                 <button className="btn btn-third ml-4" onClick={handleCancelEdit}>Avbryt</button>
-              )}
+              )} */}
+// ----------------
+      <div className="container mx-auto">
+        {foundEvent ? (
+          <div className="card w-96 bg-base-300 mx-auto text-base-content">
+            <div className="card-body">
+              <h2 className="card-title text-xl font-semibold mb-4">
+                {foundEvent.title}
+              </h2>
+              <div className="text-sm mb-2">
+                <span className="font-semibold primary">Beskrivning:</span>{" "}
+                {foundEvent.description}
+              </div>
+              <div className="text-sm mb-2">
+                <span className="font-semibold">Datum & Tid:</span>{" "}
+                {foundEvent.date}
+              </div>
+              <div className="card-actions justify-around mt-4">
+                <DeleteButton eventId={foundEvent.id} />
+                {!isEditing ? (
+                  <>
+                    <button
+                      className="btn btn-info text-primary-content ml-4"
+                      onClick={handleEditClick}
+                    >
+                      Redigera
+                    </button>
+                  </>
+                ) : (
+                  <EditEvent
+                    event={foundEvent}
+                    onCancel={handleCancelEdit}
+                    onSave={handleSaveEdit}
+                  />
+                )}
+                {isEditing && (
+                  <button
+                    className="btn btn-third"
+                    onClick={handleCancelEdit}
+                  >
+                    Avbryt
+                  </button>
+                )}
+              </div>
+// --------- dev
             </div>
           </div>
         </div>
