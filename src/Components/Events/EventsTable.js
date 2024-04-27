@@ -11,6 +11,8 @@ export default function EventTable({ eventsRowList }) {
   // ! -----------------------------
   const [sortChoice, setSortChoice] = useState("idHeader");
   const [order, setOrder] = useState("asc"); // asc or des
+  const [sortedEventsList, setSortedEventsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   /* Handle the click of an event row */
   const handleRowClick = (event) => {
@@ -18,7 +20,20 @@ export default function EventTable({ eventsRowList }) {
     router.push(`/event/${event.id}`);
   };
 
-  useEffect(() => {}, [sortChoice]);
+  useEffect(() => {
+    setSortedEventsList(eventsRowList);
+    setIsLoading(false);
+    if (sortChoice === "idHeader") {
+      let sortedEvents = [...eventsRowList].sort(
+        (oldEvent, newEvent) => oldEvent.id - newEvent.id
+      );
+      if (order === "asc") {
+        setSortedEventsList(sortedEvents);
+      } else {
+        setSortedEventsList(sortedEvents.reverse());
+      }
+    }
+  }, [sortChoice, order, eventsRowList]);
 
   //* -----------------------------
   //* SORTING
@@ -57,6 +72,9 @@ export default function EventTable({ eventsRowList }) {
   //? RENDERING OF TABLE FOR ALL EVENTS
   return (
     <div className="overflow-x-auto">
+      {isLoading && (
+        <div className="loading loading-spinner loading-lg text-primary mx-auto flex justify-center"></div>
+      )}
       <table className="table">
         {/* head */}
         <thead>
@@ -100,7 +118,7 @@ export default function EventTable({ eventsRowList }) {
           </tr>
         </thead>
         <tbody>
-          {eventsRowList.map((event) => (
+          {sortedEventsList.map((event) => (
             <tr
               key={event.id}
               className="hover cursor-pointer"

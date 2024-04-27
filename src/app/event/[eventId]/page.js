@@ -87,7 +87,7 @@ export default function EventViewPage({ params }) {
             </div>
           </div>
         ) : (
-          <div>Loading...</div>
+          <div className="loading loading-spinner loading-lg text-primary my-auto mx-auto flex justify-center"></div>
         )}
       </div>
     </>
