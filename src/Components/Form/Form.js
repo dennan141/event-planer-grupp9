@@ -75,7 +75,7 @@ export default function Form() {
           Datum
         </label>
         <input
-          className="input input-bordered w-full max-w-xs"
+          className="input input-bordered w-full max-w-xs text-white"
           type="datetime-local"
           name="Date"
           required

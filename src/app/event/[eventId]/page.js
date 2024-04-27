@@ -77,7 +77,7 @@ export default function EventViewPage({ params }) {
                 )}
                 {isEditing && (
                   <button
-                    className="btn btn-third ml-4"
+                    className="btn btn-third"
                     onClick={handleCancelEdit}
                   >
                     Avbryt
