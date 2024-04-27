@@ -49,7 +49,7 @@ export default function Form() {
           Titel
         </label>
         <input
-          className="input input-bordered w-full max-w-xs"
+          className="input input-bordered text-white w-full max-w-xs"
           type="text"
           name="Title"
           placeholder="Skriv din titel här..."
@@ -62,7 +62,7 @@ export default function Form() {
           Beskrivning
         </label>
         <textarea
-          className="textarea textarea-bordered textarea-lg w-full max-w-xs"
+          className="textarea textarea-bordered text-white textarea-lg w-full max-w-xs"
           type="text-area"
           name="Description"
           placeholder="Skriv din beskrivning här..."
