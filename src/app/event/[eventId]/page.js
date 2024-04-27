@@ -58,7 +58,7 @@ export default function EventViewPage({ params }) {
                 <EditEvent event={foundEvent} onCancel={handleCancelEdit} onSave={handleSaveEdit} />
               )}
               {isEditing && (
-                <button className="btn btn-third ml-4" onClick={handleCancelEdit}>Cancel</button>
+                <button className="btn btn-third ml-4" onClick={handleCancelEdit}>Avbryt</button>
               )}
             </div>
           </div>
