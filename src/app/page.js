@@ -34,7 +34,7 @@ export default function Home() {
   }, []);
 
   const handleLatestActivityClick = () => {
-    console.log("Ind handler: " + latestActivity)
+    console.log("In handler: " + latestActivity)
     if (latestActivity) {
       router.push(`/event/${latestActivity.id}`);
     }

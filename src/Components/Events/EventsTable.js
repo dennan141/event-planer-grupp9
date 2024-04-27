@@ -11,7 +11,7 @@ export default function EventTable({ eventsRowList }) {
   // ! -----------------------------
 
   const [sortChoice, setSortChoice] = useState("idHeader");
-  const [order, setOrder] = useState("asc"); // asc or des
+  const [order, setOrder] = useState("des"); // asc or des
   const [sortedEventsList, setSortedEventsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

@@ -69,7 +69,6 @@ export default function EventViewPage({ params }) {
                 {foundEvent.date}
               </div>
               <div className="card-actions justify-around mt-4">
-                <DeleteButton eventId={foundEvent.id} />
                 {!isEditing ? (
                   <>
                     <button
@@ -86,8 +85,12 @@ export default function EventViewPage({ params }) {
                     onSave={handleSaveEdit}
                   />
                 )}
+                <DeleteButton eventId={foundEvent.id} />
                 {isEditing && (
-                  <button className="btn btn-third" onClick={handleCancelEdit}>
+                  <button
+                    className="btn btn-neutral"
+                    onClick={handleCancelEdit}
+                  >
                     Avbryt
                   </button>
                 )}
@@ -96,7 +99,7 @@ export default function EventViewPage({ params }) {
           </div>
         </div>
       ) : (
-        <div>Loading...</div>
+        <div className="loading loading-spinner loading-lg text-primary mx-auto flex justify-center"></div>
       )}
     </>
   );

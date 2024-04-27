@@ -55,9 +55,19 @@ export default function Form() {
         date: newEventDate,
       };
 
+      //TODO: #27 Improve performance of this nested async hell
       if (pathname === "/add") {
-        db.set(newEvent);
-        sessionStorage.setItem("latestActivity", JSON.stringify(newEvent));
+        db.set(newEvent).then(() => {
+          db.keys().then((allDbKeys) => {
+            const latestActivityId = allDbKeys[allDbKeys.length - 1];
+            db.get(latestActivityId).then((foundEvent) => {
+              sessionStorage.setItem(
+                "latestActivity",
+                JSON.stringify(foundEvent)
+              );
+            });
+          });
+        });
       } else {
         db.get(parseInt(params.eventId)).then((foundEvent) => {
           foundEvent.date = newEvent.date;
@@ -129,7 +139,7 @@ export default function Form() {
         {errors.date && <div className="error">{errors.date}</div>}
       </div>
 
-      <button className="btn btn-primary mt-2">Lägg till</button>
+      <button className="btn btn-primary mt-3">Lägg till</button>
     </form>
   );
 }
