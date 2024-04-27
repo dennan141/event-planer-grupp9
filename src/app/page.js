@@ -9,33 +9,72 @@ import populateDatabase from "@/Components/IndexedDb/PopulateDatabase/PopulateDa
 export default function Home() {
   const router = useRouter();
   const [eventData, setEventData] = useState([]);
+  const [latestActivity, setLatestActivity] = useState(null);
   const [lastUpdatedEvent, setLastUpdatedEvent] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       setEventData(await Database.getAllEvents());
+      
+      // Fetch latest activity
+      const latestActivityData = sessionStorage.getItem('latestActivity');
+      if (latestActivityData) {
+        setLatestActivity(JSON.parse(latestActivityData));
+      }
+      
+      // Fetch last updated event
       const lastUpdatedEventData = sessionStorage.getItem("lastUpdatedEvent");
       if (lastUpdatedEventData) {
         setLastUpdatedEvent(JSON.parse(lastUpdatedEventData));
       }
     }
-    //If database does not have any keys, create some events
+
+    // If the database does not have any keys, create some events
     Database.keys().then((result) => {
       if (result.length <= 0) {
-        populateDatabase()
+        populateDatabase();
       }
-    })
-    
-    
+    });
+
     fetchData();
   }, []);
 
+  const handleLatestActivityClick = () => {
+    if (latestActivity) {
+      router.push(`/event/${latestActivity.id}`);
+    }
+  };
+
   const handleLastUpdatedClick = () => {
-    router.push(`/event/${lastUpdatedEvent.id}`);
+    if (lastUpdatedEvent) {
+      router.push(`/event/${lastUpdatedEvent.id}`);
+    }
   };
 
   return (
     <>
+      {latestActivity && (
+        <tr onClick={handleLatestActivityClick} className="cursor-pointer">
+          <td colSpan="4">
+            <table className="table w-80 bg-error text-gray-800">
+              <tbody>
+                <tr>
+                  <th colSpan="2" className="table-title text-lg font-semibold">{latestActivity.title}</th>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Beskrivning:</td>
+                  <td>{latestActivity.description}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Datum & Tid:</td>
+                  <td>{latestActivity.date}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      )}
+
       {lastUpdatedEvent && (
         <div className="container mx-auto">
           <table
@@ -60,6 +99,7 @@ export default function Home() {
           </table>
         </div>
       )}
+
       <EventTable eventsRowList={eventData} />
     </>
   );
