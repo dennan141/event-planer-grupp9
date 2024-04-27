@@ -10,6 +10,7 @@ export default function Form() {
   const [existingEvent, setExistingEvent] = useState(null);
   const MAX_TITLE_LENGTH = 25;
   const MAX_DESCRIPTION_LENGTH = 200;
+  const [buttonMessage, setButtonMessage] = useState("Lägg till");
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -21,8 +22,8 @@ export default function Form() {
         console.error("Error fetching event data:", error);
       }
     };
-    console.log(pathname);
     if (pathname != "/add") {
+      setButtonMessage("Redigera event");
       fetchEvent();
     }
   }, [params.eventId]);
@@ -144,7 +145,7 @@ export default function Form() {
         {errors.date && <div className="error">{errors.date}</div>}
       </div>
 
-      <button className="btn btn-primary mt-3">Lägg till</button>
+      <button className="btn btn-primary mt-3">{buttonMessage}</button>
     </form>
   );
 }
