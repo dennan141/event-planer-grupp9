@@ -103,7 +103,7 @@ export default function EventTable({ eventsRowList }) {
       <table className="table">
         {/* head */}
         <thead>
-          <tr>
+          <tr className="text-lg">
             {/* ID */}
             <th
               id="idHeader"

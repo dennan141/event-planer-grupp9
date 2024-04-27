@@ -16,7 +16,7 @@ export default function DeleteButton({ eventId, onSuccess, onError }) {
 
   return (
     <Link href="/" passHref>
-      <button className="btn btn-active" onClick={handleDeleteClick}>Ta bort</button>
+      <button className="btn btn-error text-primary-content" onClick={handleDeleteClick}>Ta bort</button>
     </Link>
   );
 }

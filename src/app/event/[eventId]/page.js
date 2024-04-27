@@ -44,7 +44,7 @@ export default function EventViewPage({ params }) {
     <>
       <div className="container mx-auto">
         {foundEvent ? (
-          <div className="card w-96 bg-accent mx-auto text-primary-content">
+          <div className="card w-96 bg-base-300 mx-auto text-base-content">
             <div className="card-body">
               <h2 className="card-title text-xl font-semibold mb-4">
                 {foundEvent.title}
@@ -62,7 +62,7 @@ export default function EventViewPage({ params }) {
                 {!isEditing ? (
                   <>
                     <button
-                      className="btn btn-third ml-4"
+                      className="btn btn-info text-primary-content ml-4"
                       onClick={handleEditClick}
                     >
                       Redigera
