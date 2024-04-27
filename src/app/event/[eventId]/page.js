@@ -28,7 +28,7 @@ export default function EventViewPage({ params }) {
   };
 
   const handleCancelEdit = () => {
-    setIsEditing(false); 
+    setIsEditing(false);
   };
 
   const handleSaveEdit = async () => {
@@ -45,45 +45,16 @@ export default function EventViewPage({ params }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     // Uppdatera editedEvent med de ändringar som gjorts i formuläret
-    setEditedEvent(prevState => ({
+    setEditedEvent((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   return (
     <>
-// - validation fixes
-    
-        {/* <div className="card w-96 bg-accent  text-primary-content">
-          <div className="card-body">
-            {!isEditing ? (
-              <>
-                <h2 className="card-title text-xl font-semibold mb-4">{foundEvent.title}</h2>
-                <div className="text-sm mb-2"><span className="font-semibold">Beskrivning:</span> {foundEvent.description}</div>
-                <div className="text-sm mb-2"><span className="font-semibold">Datum & Tid:</span> {foundEvent.date}</div>
-              </>
-            ) : (
-              <EditEvent
-                event={editedEvent}
-                onChange={handleChange} // Lägg till onChange för att uppdatera editedEvent
-                onCancel={handleCancelEdit}
-                onSave={handleSaveEdit}
-              />
-            )}
-           
-            
-            <div className="card-actions justify-around mt-4">
-              <DeleteButton eventId={foundEvent.id} />
-              {!isEditing && (
-                <button className="btn btn-third ml-4" onClick={handleEditClick}>Redigera</button>
-              )}
-              {isEditing && (
-                <button className="btn btn-third ml-4" onClick={handleCancelEdit}>Avbryt</button>
-              )} */}
-// ----------------
-      <div className="container mx-auto">
-        {foundEvent ? (
+      {foundEvent ? (
+        <div className="container mx-auto">
           <div className="card w-96 bg-base-300 mx-auto text-base-content">
             <div className="card-body">
               <h2 className="card-title text-xl font-semibold mb-4">
@@ -116,15 +87,11 @@ export default function EventViewPage({ params }) {
                   />
                 )}
                 {isEditing && (
-                  <button
-                    className="btn btn-third"
-                    onClick={handleCancelEdit}
-                  >
+                  <button className="btn btn-third" onClick={handleCancelEdit}>
                     Avbryt
                   </button>
                 )}
               </div>
-// --------- dev
             </div>
           </div>
         </div>
@@ -134,3 +101,30 @@ export default function EventViewPage({ params }) {
     </>
   );
 }
+
+/* <div className="card w-96 bg-accent  text-primary-content">
+          <div className="card-body">
+            {!isEditing ? (
+              <>
+                <h2 className="card-title text-xl font-semibold mb-4">{foundEvent.title}</h2>
+                <div className="text-sm mb-2"><span className="font-semibold">Beskrivning:</span> {foundEvent.description}</div>
+                <div className="text-sm mb-2"><span className="font-semibold">Datum & Tid:</span> {foundEvent.date}</div>
+              </>
+            ) : (
+              <EditEvent
+                event={editedEvent}
+                onChange={handleChange} // Lägg till onChange för att uppdatera editedEvent
+                onCancel={handleCancelEdit}
+                onSave={handleSaveEdit}
+              />
+            )}
+           
+            
+            <div className="card-actions justify-around mt-4">
+              <DeleteButton eventId={foundEvent.id} />
+              {!isEditing && (
+                <button className="btn btn-third ml-4" onClick={handleEditClick}>Redigera</button>
+              )}
+              {isEditing && (
+                <button className="btn btn-third ml-4" onClick={handleCancelEdit}>Avbryt</button>
+              )} */
