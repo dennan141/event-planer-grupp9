@@ -29,6 +29,9 @@ export default function Form() {
         foundEvent.description = newEvent.description;
 
         db.set(foundEvent);
+        
+        // spara den uppdaterade event:en sessionstorage
+        sessionStorage.setItem('lastUpdatedEvent', JSON.stringify(foundEvent));
       });
     }
     router.push("/");

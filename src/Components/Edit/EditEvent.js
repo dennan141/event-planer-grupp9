@@ -20,17 +20,16 @@ export default function EditEvent({ event, onCancel, onSave }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("save this:", { ...formData, id: event.id });
+      console.log("SAVED:", { ...formData, id: event.id });
       await set({ ...formData, id: event.id });
       onSave({ ...formData, id: event.id });
     } catch (error) {
-      console.error("no bueno updato:", error);
+      console.error("ERROR IN UPDATING:", error);
     }
   };
 
   return (
     <div>
-      <h2>Edit Event</h2>
       <Form
         formData={formData}
         onChange={handleFormChange} 
