@@ -14,16 +14,20 @@ export default function Form() {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const eventData = await db.get(parseInt(params.eventId));
-        setExistingEvent(eventData);
+        db.get(parseInt(params.eventId)).then((eventData) => {
+          setExistingEvent(eventData);
+        });
       } catch (error) {
         console.error("Error fetching event data:", error);
       }
     };
-
-    fetchEvent();
+    console.log(pathname);
+    if (pathname != "/add") {
+      fetchEvent();
+    }
   }, [params.eventId]);
 
+  // * ----------- ADD --------------
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -84,6 +88,7 @@ export default function Form() {
     }
   };
 
+  // * --------- RENDER PAGE ---------
   return (
     <form
       onSubmit={handleSubmit}
