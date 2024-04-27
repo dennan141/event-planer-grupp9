@@ -54,7 +54,7 @@ export default function EventViewPage({ params }) {
   return (
     <>
       {foundEvent ? (
-        <div className="container mx-auto">
+        <div className="container mx-auto mt-2">
           <div className="card w-96 bg-base-300 mx-auto text-base-content">
             <div className="card-body">
               <h2 className="card-title text-xl font-semibold mb-4">
@@ -85,7 +85,7 @@ export default function EventViewPage({ params }) {
                     onSave={handleSaveEdit}
                   />
                 )}
-                <DeleteButton eventId={foundEvent.id} />
+
                 {isEditing && (
                   <button
                     className="btn btn-neutral"
@@ -94,6 +94,7 @@ export default function EventViewPage({ params }) {
                     Avbryt
                   </button>
                 )}
+                <DeleteButton eventId={foundEvent.id} />
               </div>
             </div>
           </div>
