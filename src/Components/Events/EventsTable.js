@@ -9,6 +9,7 @@ export default function EventTable({ eventsRowList }) {
   // ! -----------------------------
   // ! CREATE SESSIONSTORAGE HERE TO STORE ORDER AND SORTCHOICE FOR USER
   // ! -----------------------------
+
   const [sortChoice, setSortChoice] = useState("idHeader");
   const [order, setOrder] = useState("asc"); // asc or des
   const [sortedEventsList, setSortedEventsList] = useState([]);
@@ -16,27 +17,51 @@ export default function EventTable({ eventsRowList }) {
 
   /* Handle the click of an event row */
   const handleRowClick = (event) => {
-    // * Handle event here
     router.push(`/event/${event.id}`);
   };
 
-  useEffect(() => {
-    setSortedEventsList(eventsRowList);
-    setIsLoading(false);
-    if (sortChoice === "idHeader") {
-      let sortedEvents = [...eventsRowList].sort(
-        (oldEvent, newEvent) => oldEvent.id - newEvent.id
-      );
-      if (order === "asc") {
-        setSortedEventsList(sortedEvents);
-      } else {
-        setSortedEventsList(sortedEvents.reverse());
-      }
-    }
-  }, [sortChoice, order, eventsRowList]);
-
   //* -----------------------------
   //* SORTING
+
+  useEffect(() => {
+    setSortedEventsList([...eventsRowList]);
+  }, [eventsRowList]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    let sortedEvents = [...eventsRowList];
+
+    // * ID
+    if (sortChoice === "idHeader") {
+      sortedEvents.sort((oldEvent, newEvent) => oldEvent.id - newEvent.id);
+    }
+
+    //* TITLE
+    if (sortChoice === "titleHeader") {
+      //Creates and shallow COPY of original array
+
+      sortedEvents.sort((a, b) => {
+        const titleA = a.title.toLowerCase();
+        const titleB = b.title.toLowerCase();
+        //Compares each letter and moves accordingly
+        if (titleA < titleB) return -1;
+        if (titleA > titleB) return 1;
+        return 0; //If letters are the same
+      });
+    }
+    //* DATE
+    if (sortChoice === "dateHeader") {
+      sortedEvents.sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+    }
+    //* Change order of array if order is 'DES'
+    if (order === "des") {
+      setSortedEventsList(sortedEvents.reverse());
+    }
+    setSortedEventsList(sortedEvents);
+    setIsLoading(false);
+  }, [sortChoice, order, eventsRowList]);
 
   const sortingFunc = (id) => {
     switch (id) {
@@ -134,8 +159,4 @@ export default function EventTable({ eventsRowList }) {
       </table>
     </div>
   );
-}
-
-{
-  /* <Link key={event.id} href={`event/${event.id}`} passHref></Link> */
 }
