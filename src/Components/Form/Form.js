@@ -42,14 +42,14 @@ export default function Form() {
 
   // * --------- RENDER PAGE ---------
   return (
-    <form onSubmit={handleSubmit} className="form-control m-2">
+    <form onSubmit={handleSubmit} className="form-control justify-center items-center">
       {/* TITLE */}
       <div>
         <label className="label" htmlFor="Title">
           Titel
         </label>
         <input
-          className="input input-md bg-secondary shadow w-full max-w-xs"
+          className="input input-bordered w-full max-w-xs"
           type="text"
           name="Title"
           placeholder="Skriv din titel här..."
@@ -62,7 +62,7 @@ export default function Form() {
           Beskrivning
         </label>
         <textarea
-          className="input input-lg bg-secondary shadow w-full max-w-xs"
+          className="textarea textarea-bordered textarea-lg w-full max-w-xs"
           type="text-area"
           name="Description"
           placeholder="Skriv din beskrivning här..."
@@ -75,14 +75,14 @@ export default function Form() {
           Datum
         </label>
         <input
-          className="input  bg-secondary shadow w-full max-w-xs"
+          className="input input-bordered w-full max-w-xs"
           type="datetime-local"
           name="Date"
           required
         />
       </div>
 
-      <button className="btn max-w-xs mt-2">Lägg till</button>
+      <button className="btn btn-primary max-w-xs mt-2">Lägg till</button>
     </form>
   );
 }
