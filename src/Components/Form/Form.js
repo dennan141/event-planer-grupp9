@@ -77,7 +77,7 @@ export default function Form() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="form-control justify-center items-center"
+      className="grid justify-center items-center"
       noValidate
     >
       {/* TITLE */}
@@ -86,7 +86,7 @@ export default function Form() {
           Titel
         </label>
         <input
-          className="input input-md bg-neutral shadow w-full "
+          className="input flex bg-neutral shadow w-full max-w-md"
           type="text"
           name="Title"
           placeholder="Skriv din titel här..."
@@ -102,7 +102,7 @@ export default function Form() {
           Beskrivning
         </label>
         <textarea
-          className="textarea textarea-lg bg-neutral shadow w-full"
+          className="textarea textarea-lg bg-neutral shadow max-w-md flex"
           type="text-area"
           name="Description"
           placeholder="Skriv din beskrivning här..."
@@ -120,7 +120,7 @@ export default function Form() {
           Datum
         </label>
         <input
-          className="input bg-neutral shadow w-full "
+          className="input bg-neutral shadow w-full max-w-md"
           type="datetime-local"
           name="Date"
           min={new Date().toISOString().split("T")[0]}
