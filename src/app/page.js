@@ -29,26 +29,28 @@ export default function Home() {
   return (
     <>
       {lastUpdatedEvent && (
-        <table
-          className="table w-80 bg-error text-gray-800 cursor-pointer"
-          onClick={handleLastUpdatedClick}
-        >
-          <tbody>
-            <tr>
-              <th colSpan="2" className="table-title text-lg font-semibold">
-                {lastUpdatedEvent.title}
-              </th>
-            </tr>
-            <tr>
-              <td className="font-semibold">Beskrivning:</td>
-              <td>{lastUpdatedEvent.description}</td>
-            </tr>
-            <tr>
-              <td className="font-semibold">Datum & Tid:</td>
-              <td>{lastUpdatedEvent.date}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="container mx-auto">
+          <table
+            className="table w-80 bg-error text-gray-800 cursor-pointer mx-auto"
+            onClick={handleLastUpdatedClick}
+          >
+            <tbody>
+              <tr>
+                <th colSpan="2" className="table-title text-lg font-semibold">
+                  {lastUpdatedEvent.title}
+                </th>
+              </tr>
+              <tr>
+                <td className="font-semibold">Beskrivning:</td>
+                <td>{lastUpdatedEvent.description}</td>
+              </tr>
+              <tr>
+                <td className="font-semibold">Datum & Tid:</td>
+                <td>{lastUpdatedEvent.date}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       )}
       <EventTable eventsRowList={eventData} />
     </>
