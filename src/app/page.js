@@ -4,12 +4,12 @@ import EventTable from "@/Components/Events/EventsTable";
 import { useEffect, useState } from "react";
 import * as Database from "@/Components/IndexedDb/Database";
 import { useRouter } from "next/navigation";
+import populateDatabase from "@/Components/IndexedDb/PopulateDatabase/PopulateDatabase";
 
 export default function Home() {
-  Database.createDatabase();
+  const router = useRouter();
   const [eventData, setEventData] = useState([]);
   const [lastUpdatedEvent, setLastUpdatedEvent] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
@@ -19,6 +19,14 @@ export default function Home() {
         setLastUpdatedEvent(JSON.parse(lastUpdatedEventData));
       }
     }
+    //If database does not have any keys, create some events
+    Database.keys().then((result) => {
+      if (result.length <= 0) {
+        populateDatabase()
+      }
+    })
+    
+    
     fetchData();
   }, []);
 

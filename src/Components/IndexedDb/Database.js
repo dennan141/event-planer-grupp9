@@ -1,5 +1,5 @@
 import { openDB } from "idb";
-import DummyData from "@/Components/DummyData/Data.json";
+
 
 //TODO: #12 Consider changing to loading the dummy data in createDatabase -> if
 export async function createDatabase() {
@@ -15,9 +15,7 @@ export async function createDatabase() {
     },
   });
   /* Populate with dummy Data */
-  DummyData.forEach((dummyEvent) => {
-    dbPromise.put("events", dummyEvent);
-  });
+  
   return dbPromise;
 }
 
