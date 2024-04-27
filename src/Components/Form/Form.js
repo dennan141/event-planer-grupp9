@@ -8,29 +8,32 @@ export default function Form() {
   const params = useParams();
   const [errors, setErrors] = useState({});
   const [existingEvent, setExistingEvent] = useState(null);
-  const MAX_TITLE_LENGTH = 25; 
+  const MAX_TITLE_LENGTH = 25;
   const MAX_DESCRIPTION_LENGTH = 200;
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const eventData = await db.get(parseInt(params.eventId));
-        setExistingEvent(eventData);
+        db.get(parseInt(params.eventId)).then((eventData) => {
+          setExistingEvent(eventData);
+        });
       } catch (error) {
         console.error("Error fetching event data:", error);
       }
     };
-
-    fetchEvent();
+    console.log(pathname);
+    if (pathname != "/add") {
+      fetchEvent();
+    }
   }, [params.eventId]);
 
+  // * ----------- ADD --------------
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const newEventTitle = event.target.Title.value;
     const newEventDescription = event.target.Description.value;
     const newEventDate = event.target.Date.value;
-
 
     const errors = {};
     if (!newEventTitle.trim()) {
@@ -56,9 +59,19 @@ export default function Form() {
         date: newEventDate,
       };
 
+      //TODO: #27 Improve performance of this nested async hell
       if (pathname === "/add") {
-        db.set(newEvent);
-        sessionStorage.setItem('latestActivity', JSON.stringify(newEvent));
+        db.set(newEvent).then(() => {
+          db.keys().then((allDbKeys) => {
+            const latestActivityId = allDbKeys[allDbKeys.length - 1];
+            db.get(latestActivityId).then((foundEvent) => {
+              sessionStorage.setItem(
+                "latestActivity",
+                JSON.stringify(foundEvent)
+              );
+            });
+          });
+        });
       } else {
         db.get(parseInt(params.eventId)).then((foundEvent) => {
           foundEvent.date = newEvent.date;
@@ -66,7 +79,7 @@ export default function Form() {
           foundEvent.description = newEvent.description;
 
           db.set(foundEvent);
-          sessionStorage.setItem('latestActivity', JSON.stringify(foundEvent));
+          sessionStorage.setItem("latestActivity", JSON.stringify(foundEvent));
         });
       }
       router.push("/");
@@ -75,21 +88,26 @@ export default function Form() {
     }
   };
 
+  // * --------- RENDER PAGE ---------
   return (
-    <form onSubmit={handleSubmit} className="form-control m-2" noValidate>
+    <form
+      onSubmit={handleSubmit}
+      className="grid justify-center items-center"
+      noValidate
+    >
       {/* TITLE */}
       <div>
         <label className="label" htmlFor="Title">
           Titel
         </label>
         <input
-          className="input input-md bg-secondary shadow w-full max-w-xs"
+          className="input flex bg-neutral shadow w-full max-w-md"
           type="text"
           name="Title"
           placeholder="Skriv din titel här..."
           required
           defaultValue={existingEvent ? existingEvent.title : ""}
-          noValidate 
+          noValidate
         />
         {errors.title && <div className="error">{errors.title}</div>}
       </div>
@@ -99,15 +117,17 @@ export default function Form() {
           Beskrivning
         </label>
         <textarea
-          className="input input-lg bg-secondary shadow w-full max-w-xs"
+          className="textarea textarea-lg bg-neutral shadow max-w-md flex"
           type="text-area"
           name="Description"
           placeholder="Skriv din beskrivning här..."
           required
           defaultValue={existingEvent ? existingEvent.description : ""}
-          noValidate 
+          noValidate
         />
-        {errors.description && <div className="error">{errors.description}</div>}
+        {errors.description && (
+          <div className="error">{errors.description}</div>
+        )}
       </div>
       {/* DATE TIME */}
       <div>
@@ -115,16 +135,16 @@ export default function Form() {
           Datum
         </label>
         <input
-          className="input bg-secondary shadow w-full max-w-xs"
+          className="input bg-neutral shadow w-full max-w-md"
           type="datetime-local"
           name="Date"
-          min={new Date().toISOString().split('T')[0]}
+          min={new Date().toISOString().split("T")[0]}
           defaultValue={existingEvent ? existingEvent.date : ""}
         />
         {errors.date && <div className="error">{errors.date}</div>}
       </div>
 
-      <button className="btn max-w-xs mt-2">Lägg till</button>
+      <button className="btn btn-primary mt-3">Lägg till</button>
     </form>
   );
 }

@@ -1,6 +1,5 @@
 import { openDB } from "idb";
 
-
 //TODO: #12 Consider changing to loading the dummy data in createDatabase -> if
 export async function createDatabase() {
   //Using params name, version and functions ?
@@ -14,8 +13,6 @@ export async function createDatabase() {
       }
     },
   });
-  /* Populate with dummy Data */
-  
   return dbPromise;
 }
 
@@ -48,6 +45,7 @@ export async function deleteEvent(key) {
 export async function getAllEvents() {
   const db = await createDatabase();
   const allKeys = await db.getAllKeys("events");
+
   const allEvents = [];
 
   for (const key of allKeys) {
@@ -56,6 +54,5 @@ export async function getAllEvents() {
   }
   return allEvents;
 }
-
 
 export default createDatabase;
