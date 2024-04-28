@@ -11,7 +11,7 @@ export default function EventTable({ eventsRowList }) {
   // ! -----------------------------
 
   const [sortChoice, setSortChoice] = useState("idHeader");
-  const [order, setOrder] = useState("des"); // asc or des
+  const [order, setOrder] = useState("des"); // asc or des || Ascending or Descending
   const [sortedEventsList, setSortedEventsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,6 +30,8 @@ export default function EventTable({ eventsRowList }) {
   useEffect(() => {
     setIsLoading(true);
     let sortedEvents = [...eventsRowList];
+    setSortChoice(sessionStorage.getItem("sortChoice"));
+    setOrder(sessionStorage.getItem("sortOrder"));
 
     // * ID
     if (sortChoice === "idHeader") {
@@ -38,23 +40,24 @@ export default function EventTable({ eventsRowList }) {
 
     //* TITLE
     if (sortChoice === "titleHeader") {
-      //Creates and shallow COPY of original array
-
       sortedEvents.sort((a, b) => {
         const titleA = a.title.toLowerCase();
         const titleB = b.title.toLowerCase();
+
         //Compares each letter and moves accordingly
         if (titleA < titleB) return -1;
         if (titleA > titleB) return 1;
         return 0; //If letters are the same
       });
     }
+
     //* DATE
     if (sortChoice === "dateHeader") {
       sortedEvents.sort((a, b) => {
         return new Date(a.date) - new Date(b.date);
       });
     }
+
     //* Change order of array if order is 'DES'
     if (order === "des") {
       setSortedEventsList(sortedEvents.reverse());
@@ -67,17 +70,17 @@ export default function EventTable({ eventsRowList }) {
     switch (id) {
       case "idHeader":
         if (sortChoice == "idHeader") toogleOrder();
-        setSortChoice(id);
+        setSortChoice(sessionStorage.setItem("sortChoice", id));
         break;
 
       case "titleHeader":
         if (sortChoice === "titleHeader") toogleOrder();
-        setSortChoice(id);
+        setSortChoice(sessionStorage.setItem("sortChoice", id));
         break;
 
       case "dateHeader":
         if (sortChoice === "dateHeader") toogleOrder();
-        setSortChoice(id);
+        setSortChoice(sessionStorage.setItem("sortChoice", id));
         break;
 
       default:
@@ -86,9 +89,9 @@ export default function EventTable({ eventsRowList }) {
   };
 
   const toogleOrder = () => {
-    if (order === "des") {
-      setOrder("asc");
-    } else setOrder("des");
+    if (sessionStorage.getItem("sortOrder") === "des") {
+      sessionStorage.setItem("sortOrder", "asc");
+    } else sessionStorage.setItem("sortOrder", "des");
   };
   //* END OF SORTING
   //* -----------------------------
