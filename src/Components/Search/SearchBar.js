@@ -18,9 +18,7 @@ const Search = () => {
     } else {
       params.delete("query");
     }
-    console.log("Query: " + query);
-    console.log("pathnam: " + pathname);
-    console.log("params" + params);
+
     replace(`${pathname}?${params.toString()}`);
   }
 

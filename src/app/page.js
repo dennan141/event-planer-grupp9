@@ -1,13 +1,14 @@
 "use client";
 import "/tailwind.css";
 import EventTable from "@/Components/Events/EventsTable";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import * as Database from "@/Components/IndexedDb/Database";
 import { useRouter } from "next/navigation";
 import populateDatabase from "@/Components/IndexedDb/PopulateDatabase/PopulateDatabase";
-import Search from "@/Components/Searchbar/Search";
+import Search from "@/Components/Search/SearchBar";
+import Loading from "@/Components/Loading/Loading";
 
-export default function Home() {
+export default function Home({ searchParams }) {
   const router = useRouter();
   const [eventData, setEventData] = useState([]);
   const [latestActivity, setLatestActivity] = useState(null);
@@ -73,8 +74,10 @@ export default function Home() {
         </div>
       )}
       <Search />
-      
-      <EventTable eventsRowList={eventData}  />
+
+      <Suspense key={searchParams} fallback={<Loading />}>
+        <EventTable eventsRowList={eventData} searchQuery={searchParams.query} />
+      </Suspense>
     </>
   );
 }

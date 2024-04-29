@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
+import Search from "../Search/SearchList";
 
-export default function EventTable({ eventsRowList }) {
+export default function EventTable({ eventsRowList, searchQuery }) {
   const router = useRouter();
 
   // ! -----------------------------
@@ -27,6 +28,9 @@ export default function EventTable({ eventsRowList }) {
   //* SORTING
 
   useEffect(() => {
+    console.log("Seach" + 
+      <Search eventsList={eventsRowList} searchQuery={searchQuery} />
+    );
     setSortedEventsList([...eventsRowList]);
   }, [eventsRowList]);
 
@@ -70,6 +74,7 @@ export default function EventTable({ eventsRowList }) {
   }, [sortChoice, order, eventsRowList]);
 
   const sortingFunc = (id) => {
+    console.log("Events Search: " + searchQuery);
     switch (id) {
       case "idHeader":
         if (sortChoice == "idHeader") toogleOrder();
@@ -103,7 +108,7 @@ export default function EventTable({ eventsRowList }) {
   //? RENDERING OF TABLE FOR ALL EVENTS
   return (
     <div className="overflow-x-auto">
-      <Loading isLoading={isLoading }/>
+      <Loading isLoading={isLoading} />
       <table className="table">
         {/* head */}
         <thead>
