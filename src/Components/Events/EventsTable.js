@@ -20,6 +20,14 @@ export default function EventTable({ eventsRowList }) {
     router.push(`/event/${event.id}`);
   };
 
+
+
+  //TODO: #31 Make Component
+
+  function test() {
+    console.log("test")
+  }
+
   //* -----------------------------
   //* SORTING
 
