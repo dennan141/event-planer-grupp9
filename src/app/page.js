@@ -12,6 +12,8 @@ export default function Home({ searchParams }) {
   const router = useRouter();
   const [eventData, setEventData] = useState([]);
   const [latestActivity, setLatestActivity] = useState(null);
+  const query = searchParams?.query ?? '';
+
 
   //TODO: #32 Consider chagning this to component as well.
   // * ---------- POPULATE WITH DATA --------------
@@ -76,7 +78,10 @@ export default function Home({ searchParams }) {
       <Search />
 
       <Suspense key={searchParams} fallback={<Loading />}>
-        <EventTable eventsRowList={eventData} searchQuery={searchParams.query} />
+        <EventTable
+          eventsRowList={eventData}
+          searchQuery={query}
+        />
       </Suspense>
     </>
   );

@@ -15,6 +15,7 @@ export default function EventTable({ eventsRowList, searchQuery }) {
   const [sortChoice, setSortChoice] = useState("idHeader");
   const [order, setOrder] = useState("des"); // asc or des || Ascending or Descending
   const [sortedEventsList, setSortedEventsList] = useState([]);
+  const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   /* Handle the click of an event row */
@@ -28,15 +29,24 @@ export default function EventTable({ eventsRowList, searchQuery }) {
   //* SORTING
 
   useEffect(() => {
-    console.log("Seach" + 
-      <Search eventsList={eventsRowList} searchQuery={searchQuery} />
-    );
     setSortedEventsList([...eventsRowList]);
   }, [eventsRowList]);
 
   useEffect(() => {
     setIsLoading(true);
-    let sortedEvents = [...eventsRowList];
+    let sortedEvents = [];
+
+    console.log(searchQuery);
+
+    if (searchQuery === '') {
+      sortedEvents = [...eventsRowList];
+    } else {
+      const filteredList = sortedEventsList.filter((event) =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      sortedEvents = filteredList;
+    }
+
     setSortChoice(sessionStorage.getItem("sortChoice"));
     setOrder(sessionStorage.getItem("sortOrder"));
 
@@ -70,11 +80,11 @@ export default function EventTable({ eventsRowList, searchQuery }) {
       setSortedEventsList(sortedEvents.reverse());
     }
     setSortedEventsList(sortedEvents);
+
     setIsLoading(false);
-  }, [sortChoice, order, eventsRowList]);
+  }, [sortChoice, order, eventsRowList, searchQuery]);
 
   const sortingFunc = (id) => {
-    console.log("Events Search: " + searchQuery);
     switch (id) {
       case "idHeader":
         if (sortChoice == "idHeader") toogleOrder();
@@ -101,6 +111,7 @@ export default function EventTable({ eventsRowList, searchQuery }) {
       sessionStorage.setItem("sortOrder", "asc");
     } else sessionStorage.setItem("sortOrder", "des");
   };
+
   //* END OF SORTING
   //* -----------------------------
 
@@ -152,18 +163,20 @@ export default function EventTable({ eventsRowList, searchQuery }) {
           </tr>
         </thead>
         <tbody>
-          {sortedEventsList.map((event) => (
-            <tr
-              key={event.id}
-              className="hover cursor-pointer"
-              onClick={() => handleRowClick(event)}
-            >
-              <td>{event.id}</td>
-              <td>{event.title}</td>
-              <td>{event.date}</td>
-              <td>{event.description}</td>
-            </tr>
-          ))}
+          {sortedEventsList.length > 0
+            ? sortedEventsList.map((event) => (
+                <tr
+                  key={event.id}
+                  className="hover cursor-pointer"
+                  onClick={() => handleRowClick(event)}
+                >
+                  <td>{event.id}</td>
+                  <td>{event.title}</td>
+                  <td>{event.date}</td>
+                  <td>{event.description}</td>
+                </tr>
+              ))
+            : null}
         </tbody>
       </table>
     </div>
