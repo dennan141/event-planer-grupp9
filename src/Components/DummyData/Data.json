@@ -22,5 +22,65 @@
     "title": "Begravning",
     "description": "Man ner i jorden sen smörgåstårta på det",
     "date": "2018-06-12T19:30"
+  },
+  {
+    "id": 5,
+    "title": "Art Exhibition",
+    "description": "View stunning artworks by local artists",
+    "date": "2018-06-13T10:00"
+  },
+  {
+    "id": 6,
+    "title": "Business Conference",
+    "description": "Networking and keynote speeches on industry trends",
+    "date": "2018-06-13T13:00"
+  },
+  {
+    "id": 7,
+    "title": "Fitness Bootcamp",
+    "description": "Get fit with intense workout sessions",
+    "date": "2018-06-14T09:00"
+  },
+  {
+    "id": 8,
+    "title": "Movie Premiere",
+    "description": "Be the first to watch the latest blockbuster",
+    "date": "2018-06-15T19:00"
+  },
+  {
+    "id": 9,
+    "title": "Charity Gala",
+    "description": "Raise funds for a noble cause with dinner and entertainment",
+    "date": "2018-06-16T18:30"
+  },
+  {
+    "id": 10,
+    "title": "Tech Hackathon",
+    "description": "Collaborate and innovate in a 24-hour coding competition",
+    "date": "2018-06-17T12:00"
+  },
+  {
+    "id": 11,
+    "title": "Fashion Show",
+    "description": "Experience the latest trends on the runway",
+    "date": "2018-06-18T15:00"
+  },
+  {
+    "id": 12,
+    "title": "Cooking Class",
+    "description": "Learn to prepare delicious dishes with expert chefs",
+    "date": "2018-06-19T11:00"
+  },
+  {
+    "id": 13,
+    "title": "Music Concert",
+    "description": "Groove to live performances by top artists",
+    "date": "2018-06-20T20:00"
+  },
+  {
+    "id": 14,
+    "title": "Book Launch",
+    "description": "Meet the author and get your copy signed",
+    "date": "2018-06-21T16:00"
   }
 ]

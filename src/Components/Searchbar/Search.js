@@ -18,8 +18,10 @@ const Search = () => {
     } else {
       params.delete("query");
     }
-    console.log(query);
-    replace(`{${pathname}?${params.toString()}`);
+    console.log("Query: " + query);
+    console.log("pathnam: " + pathname);
+    console.log("params" + params);
+    replace(`${pathname}?${params.toString()}`);
   }
 
   return (
@@ -31,7 +33,6 @@ const Search = () => {
           type="text"
           placeholder="Sök efter titel..."
           className="input input-bordered w-full flex max-w-xs"
-          value={query}
           onChange={(e) => handleSearch(e.target.value)}
           defaultValue={searchParams.get("query")?.toString()}
         />

@@ -73,6 +73,7 @@ export default function Home() {
         </div>
       )}
       <Search />
+      
       <EventTable eventsRowList={eventData}  />
     </>
   );
