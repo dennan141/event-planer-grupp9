@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as db from "@/Components/IndexedDb/Database.js";
 import { useRouter, usePathname, useParams } from "next/navigation";
+import LengthValidation from "../LengthValidation/LengthValidation";
 
 export default function Form() {
   const router = useRouter();
@@ -8,6 +9,8 @@ export default function Form() {
   const params = useParams();
   const [errors, setErrors] = useState({});
   const [existingEvent, setExistingEvent] = useState(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const MAX_TITLE_LENGTH = 25;
   const MAX_DESCRIPTION_LENGTH = 200;
   const [buttonMessage, setButtonMessage] = useState("Lägg till");
@@ -17,6 +20,8 @@ export default function Form() {
       try {
         db.get(parseInt(params.eventId)).then((eventData) => {
           setExistingEvent(eventData);
+          setTitle(eventData.title);
+          setDescription(eventData.Description);
         });
       } catch (error) {
         console.error("Error fetching event data:", error);
@@ -40,17 +45,21 @@ export default function Form() {
     if (!newEventTitle.trim()) {
       errors.title = "Titel är obligatorisk";
     } else if (newEventTitle.length > MAX_TITLE_LENGTH) {
-      errors.title = `Titeln kan inte vara längre än ${MAX_TITLE_LENGTH} tecken`;
+      errors.title = ``;
     }
     if (!newEventDescription.trim()) {
       errors.description = "Beskrivning är obligatorisk";
     } else if (newEventDescription.length > MAX_DESCRIPTION_LENGTH) {
-      errors.description = `Beskrivningen kan inte vara längre än ${MAX_DESCRIPTION_LENGTH} tecken`;
+      errors.description = ``;
     }
     if (!newEventDate) {
       errors.date = "Datum är obligatoriskt";
-    } else if (new Date(newEventDate) < new Date()) {
-      errors.date = "Datumet kan inte vara tidigare än idag";
+    } else {
+      const currentDate = new Date();
+      const selectedDate = new Date(newEventDate);
+      if (pathname === "/add" && selectedDate < currentDate) {
+        errors.date = "Datumet kan inte vara tidigare än idag";
+      }
     }
 
     if (Object.keys(errors).length === 0) {
@@ -107,10 +116,13 @@ export default function Form() {
           name="Title"
           placeholder="Skriv din titel här..."
           required
-          defaultValue={existingEvent ? existingEvent.title : ""}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           noValidate
         />
+        <LengthValidation maxLength={MAX_TITLE_LENGTH} value={title} />
         {errors.title && <div className="error">{errors.title}</div>}
+        
       </div>
       {/* DESCRIPTION */}
       <div>
@@ -123,9 +135,11 @@ export default function Form() {
           name="Description"
           placeholder="Skriv din beskrivning här..."
           required
-          defaultValue={existingEvent ? existingEvent.description : ""}
+          value={existingEvent ? existingEvent.description : description}
+          onChange={(e) => setDescription(e.target.value)}
           noValidate
         />
+        <LengthValidation maxLength={MAX_DESCRIPTION_LENGTH} value={description} />
         {errors.description && (
           <div className="error">{errors.description}</div>
         )}
