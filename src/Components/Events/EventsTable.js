@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Loading from "../Loading/Loading";
 
 export default function EventTable({ eventsRowList }) {
   const router = useRouter();
@@ -20,13 +21,7 @@ export default function EventTable({ eventsRowList }) {
     router.push(`/event/${event.id}`);
   };
 
-
-
   //TODO: #31 Make Component
-
-  function test() {
-    console.log("test")
-  }
 
   //* -----------------------------
   //* SORTING
@@ -108,9 +103,7 @@ export default function EventTable({ eventsRowList }) {
   //? RENDERING OF TABLE FOR ALL EVENTS
   return (
     <div className="overflow-x-auto">
-      {isLoading && (
-        <div className="loading loading-spinner loading-lg text-primary mx-auto flex justify-center"></div>
-      )}
+      <Loading isLoading={isLoading }/>
       <table className="table">
         {/* head */}
         <thead>
