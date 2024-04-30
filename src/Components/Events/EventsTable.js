@@ -139,11 +139,7 @@ export default function EventTable({ eventsRowList, searchQuery }) {
               className="cursor-pointer"
             >
               Titel{" "}
-              {sortChoice === "titleHeader"
-                ? order === "asc"
-                  ? "🔼"
-                  : "🔽"
-                : ""}
+              {sortChoice === "titleHeader" ? order === "asc" ? "🔼" : "🔽" : ""}
             </th>
             {/* DATE */}
             <th
