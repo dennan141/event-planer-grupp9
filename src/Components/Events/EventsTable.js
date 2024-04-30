@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Loading from "../Loading/Loading";
+import Search from "../Search/SearchList";
 
-export default function EventTable({ eventsRowList }) {
+export default function EventTable({ eventsRowList, searchQuery }) {
   const router = useRouter();
 
   // ! -----------------------------
@@ -20,6 +22,8 @@ export default function EventTable({ eventsRowList }) {
     router.push(`/event/${event.id}`);
   };
 
+  //TODO: #31 Make Component
+
   //* -----------------------------
   //* SORTING
 
@@ -27,9 +31,21 @@ export default function EventTable({ eventsRowList }) {
     setSortedEventsList([...eventsRowList]);
   }, [eventsRowList]);
 
+
+  
   useEffect(() => {
     setIsLoading(true);
-    let sortedEvents = [...eventsRowList];
+    let sortedEvents = [];
+
+    if (searchQuery === '') {
+      sortedEvents = [...eventsRowList];
+    } else {
+      const filteredList = eventsRowList.filter((event) =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      sortedEvents = filteredList;
+    }
+
     setSortChoice(sessionStorage.getItem("sortChoice"));
     setOrder(sessionStorage.getItem("sortOrder"));
 
@@ -63,8 +79,9 @@ export default function EventTable({ eventsRowList }) {
       setSortedEventsList(sortedEvents.reverse());
     }
     setSortedEventsList(sortedEvents);
+
     setIsLoading(false);
-  }, [sortChoice, order, eventsRowList]);
+  }, [sortChoice, order, eventsRowList, searchQuery]);
 
   const sortingFunc = (id) => {
     switch (id) {
@@ -93,6 +110,7 @@ export default function EventTable({ eventsRowList }) {
       sessionStorage.setItem("sortOrder", "asc");
     } else sessionStorage.setItem("sortOrder", "des");
   };
+
   //* END OF SORTING
   //* -----------------------------
 
@@ -100,9 +118,7 @@ export default function EventTable({ eventsRowList }) {
   //? RENDERING OF TABLE FOR ALL EVENTS
   return (
     <div className="overflow-x-auto">
-      {isLoading && (
-        <div className="loading loading-spinner loading-lg text-primary mx-auto flex justify-center"></div>
-      )}
+      <Loading isLoading={isLoading} />
       <table className="table">
         {/* head */}
         <thead>
@@ -123,11 +139,7 @@ export default function EventTable({ eventsRowList }) {
               className="cursor-pointer"
             >
               Titel{" "}
-              {sortChoice === "titleHeader"
-                ? order === "asc"
-                  ? "🔼"
-                  : "🔽"
-                : ""}
+              {sortChoice === "titleHeader" ? order === "asc" ? "🔼" : "🔽" : ""}
             </th>
             {/* DATE */}
             <th
@@ -146,18 +158,20 @@ export default function EventTable({ eventsRowList }) {
           </tr>
         </thead>
         <tbody>
-          {sortedEventsList.map((event) => (
-            <tr
-              key={event.id}
-              className="hover cursor-pointer"
-              onClick={() => handleRowClick(event)}
-            >
-              <td>{event.id}</td>
-              <td>{event.title}</td>
-              <td>{event.date}</td>
-              <td>{event.description}</td>
-            </tr>
-          ))}
+          {sortedEventsList.length > 0
+            ? sortedEventsList.map((event) => (
+                <tr
+                  key={event.id}
+                  className="hover cursor-pointer"
+                  onClick={() => handleRowClick(event)}
+                >
+                  <td>{event.id}</td>
+                  <td>{event.title}</td>
+                  <td>{event.date}</td>
+                  <td>{event.description}</td>
+                </tr>
+              ))
+            : null}
         </tbody>
       </table>
     </div>

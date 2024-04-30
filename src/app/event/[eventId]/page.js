@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { get, set } from "../../../Components/IndexedDb/Database";
 import EditEvent from "@/Components/Edit/EditEvent";
 import DeleteButton from "../../../Components/DeleteEvent/DeleteEvent";
+import Loading from "@/Components/Loading/Loading";
 
 export default function EventViewPage({ params }) {
   const [foundEvent, setFoundEvent] = useState(null);
@@ -100,7 +101,7 @@ export default function EventViewPage({ params }) {
           </div>
         </div>
       ) : (
-        <div className="loading loading-spinner loading-lg text-primary mx-auto flex justify-center"></div>
+       <Loading isLoading={true}/>
       )}
     </>
   );
