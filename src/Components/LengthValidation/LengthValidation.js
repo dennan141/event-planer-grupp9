@@ -12,7 +12,7 @@ const LengthValidation = ({ maxLength, value }) => {
         {currentLength}/{maxLength}
       </div>
       {isOverMax && (
-        <div className="ml-2 text-sm text-red-500 animate-pulse">
+        <div className="ml-2 text-sm text-warning animate-pulse">
           Maximal längd ({maxLength} tecken) har överskridits
         </div>
       )}

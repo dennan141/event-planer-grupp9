@@ -21,7 +21,7 @@ export default function Form() {
         db.get(parseInt(params.eventId)).then((eventData) => {
           setExistingEvent(eventData);
           setTitle(eventData.title);
-          setDescription(eventData.Description);
+          
         });
       } catch (error) {
         console.error("Error fetching event data:", error);
@@ -135,7 +135,7 @@ export default function Form() {
           name="Description"
           placeholder="Skriv din beskrivning här..."
           required
-          value={existingEvent ? existingEvent.description : description}
+          defaultValue={existingEvent ? existingEvent.description : ""} 
           onChange={(e) => setDescription(e.target.value)}
           noValidate
         />
