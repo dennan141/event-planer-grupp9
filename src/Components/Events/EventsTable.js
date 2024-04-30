@@ -15,7 +15,6 @@ export default function EventTable({ eventsRowList, searchQuery }) {
   const [sortChoice, setSortChoice] = useState("idHeader");
   const [order, setOrder] = useState("des"); // asc or des || Ascending or Descending
   const [sortedEventsList, setSortedEventsList] = useState([]);
-  const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   /* Handle the click of an event row */
@@ -32,16 +31,16 @@ export default function EventTable({ eventsRowList, searchQuery }) {
     setSortedEventsList([...eventsRowList]);
   }, [eventsRowList]);
 
+
+  
   useEffect(() => {
     setIsLoading(true);
     let sortedEvents = [];
 
-    console.log(searchQuery);
-
     if (searchQuery === '') {
       sortedEvents = [...eventsRowList];
     } else {
-      const filteredList = sortedEventsList.filter((event) =>
+      const filteredList = eventsRowList.filter((event) =>
         event.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
       sortedEvents = filteredList;

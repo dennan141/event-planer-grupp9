@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 const Search = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
 
   //APIs needed for navigation and search
   const searchParams = useSearchParams();
@@ -32,7 +32,7 @@ const Search = () => {
           placeholder="Sök efter titel..."
           className="input input-bordered w-full flex max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
-          defaultValue={searchParams.get("query")?.toString()}
+          value={query}
         />
       </label>
       {/* Dynamiskt visa resultat baserat på 'query' */}
