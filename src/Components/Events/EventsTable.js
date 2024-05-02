@@ -20,6 +20,17 @@ export default function EventTable({ eventsRowList }) {
     router.push(`/event/${event.id}`);
   };
 
+  const handleKeyDown = (event, id) => {
+    if (event.key === "Enter") {
+      sortingFunc(id);
+    }
+  };
+
+  const navigateToEvent = (id) => {
+    if (event.key === "Enter") {
+    router.push(`/event/${id}`);
+    }
+  };
   //* -----------------------------
   //* SORTING
 
@@ -111,7 +122,9 @@ export default function EventTable({ eventsRowList }) {
             <th
               id="idHeader"
               onClick={() => sortingFunc("idHeader")}
+              onKeyDown={(e) => handleKeyDown(e, "idHeader")}
               className="cursor-pointer"
+              tabIndex="0"
             >
               ID{" "}
               {sortChoice === "idHeader" ? (order === "asc" ? "🔼" : "🔽") : ""}
@@ -120,7 +133,9 @@ export default function EventTable({ eventsRowList }) {
             <th
               id="titleHeader"
               onClick={() => sortingFunc("titleHeader")}
+              onKeyDown={(e) => handleKeyDown(e, "titleHeader")}
               className="cursor-pointer"
+              tabIndex="0"
             >
               Titel{" "}
               {sortChoice === "titleHeader"
@@ -133,7 +148,9 @@ export default function EventTable({ eventsRowList }) {
             <th
               id="dateHeader"
               onClick={() => sortingFunc("dateHeader")}
+              onKeyDown={(e) => handleKeyDown(e, "dateHeader")}
               className="cursor-pointer"
+              tabIndex="0"
             >
               Datum{" "}
               {sortChoice === "dateHeader"
@@ -151,10 +168,12 @@ export default function EventTable({ eventsRowList }) {
               key={event.id}
               className="hover cursor-pointer"
               onClick={() => handleRowClick(event)}
+              onKeyDown={(e) => navigateToEvent(event.id)}
+              tabIndex="0" 
             >
               <td>{event.id}</td>
               <td>{event.title}</td>
-              <td>{event.date}</td>
+              <td >{event.date}</td>
               <td>{event.description}</td>
             </tr>
           ))}

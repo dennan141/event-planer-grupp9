@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import * as db from "@/Components/IndexedDb/Database.js";
 import { useRouter, usePathname, useParams } from "next/navigation";
-import LengthValidation from "../LengthValidation/LengthValidation";
+import { lazy } from "react";
+import { Suspense } from "react";
+
+const LazyLengthValidation = lazy(() => import("../LengthValidation/LengthValidation"));
 
 export default function Form() {
   const router = useRouter();
@@ -12,8 +15,11 @@ export default function Form() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const MAX_TITLE_LENGTH = 25;
-  const MAX_DESCRIPTION_LENGTH = 200;
+  const MAX_DESCRIPTION_LENGTH = 100;
   const [buttonMessage, setButtonMessage] = useState("Lägg till");
+  
+  
+  
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -120,7 +126,9 @@ export default function Form() {
           onChange={(e) => setTitle(e.target.value)}
           noValidate
         />
-        <LengthValidation maxLength={MAX_TITLE_LENGTH} value={title} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyLengthValidation maxLength={MAX_TITLE_LENGTH} value={title} />
+        </Suspense>
         {errors.title && <div className="error">{errors.title}</div>}
         
       </div>
@@ -139,7 +147,9 @@ export default function Form() {
           onChange={(e) => setDescription(e.target.value)}
           noValidate
         />
-        <LengthValidation maxLength={MAX_DESCRIPTION_LENGTH} value={description} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyLengthValidation maxLength={MAX_DESCRIPTION_LENGTH} value={description} />
+        </Suspense>
         {errors.description && (
           <div className="error">{errors.description}</div>
         )}
