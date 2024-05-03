@@ -8,10 +8,6 @@ import Search from "../Search/SearchList";
 export default function EventTable({ eventsRowList, searchQuery }) {
   const router = useRouter();
 
-  // ! -----------------------------
-  // ! CREATE SESSIONSTORAGE HERE TO STORE ORDER AND SORTCHOICE FOR USER
-  // ! -----------------------------
-
   const [sortChoice, setSortChoice] = useState("idHeader");
   const [order, setOrder] = useState("des"); // asc or des || Ascending or Descending
   const [sortedEventsList, setSortedEventsList] = useState([]);
@@ -87,9 +83,8 @@ export default function EventTable({ eventsRowList, searchQuery }) {
       setSortedEventsList(sortedEvents.reverse());
     }
     setSortedEventsList(sortedEvents);
-
     setIsLoading(false);
-  }, [sortChoice, order, eventsRowList, searchQuery]);
+  }, [sortChoice, order, searchQuery]);
 
   const sortingFunc = (id) => {
     switch (id) {
@@ -122,8 +117,7 @@ export default function EventTable({ eventsRowList, searchQuery }) {
   //* END OF SORTING
   //* -----------------------------
 
-  //? -----------------------------
-  //? RENDERING OF TABLE FOR ALL EVENTS
+
   return (
     <div className="overflow-x-auto">
       <Loading isLoading={isLoading} />

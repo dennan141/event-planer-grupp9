@@ -1,8 +1,7 @@
 "use client";
 import "/tailwind.css";
 
-
-import { Suspense, useEffect, useState, lazy} from "react";
+import { Suspense, useEffect, useState, lazy } from "react";
 import * as Database from "@/Components/IndexedDb/Database";
 import { useRouter } from "next/navigation";
 import populateDatabase from "@/Components/IndexedDb/PopulateDatabase/PopulateDatabase";
@@ -11,35 +10,35 @@ import Loading from "@/Components/Loading/Loading";
 
 const EventTable = lazy(() => import("@/Components/Events/EventsTable"));
 
-
 export default function Home({ searchParams }) {
   const router = useRouter();
   const [eventData, setEventData] = useState([]);
   const [latestActivity, setLatestActivity] = useState(null);
-  const query = searchParams?.query ?? '';
-
+  const query = searchParams?.query ?? "";
 
   //TODO: #32 Consider chagning this to component as well.
   // * ---------- POPULATE WITH DATA --------------
-  useEffect(() => {
-    async function fetchData() {
-      setEventData(await Database.getAllEvents());
-      console.log(eventData);
 
-      // Fetch latest activity
-      const latestActivityData = sessionStorage.getItem("latestActivity");
-      if (latestActivityData) {
-        setLatestActivity(JSON.parse(latestActivityData));
-      }
+  //Fetches the data and populates the list with it.
+  async function fetchData() {
+    setEventData(await Database.getAllEvents());
+    console.log(eventData);
+
+    // Fetch latest activity
+    const latestActivityData = sessionStorage.getItem("latestActivity");
+    if (latestActivityData) {
+      setLatestActivity(JSON.parse(latestActivityData));
     }
+  }
 
-    // If the database does not have any keys, create some events
+  useEffect(() => {
+    // If the database does not have any keys, create some events for show-casing
     Database.keys().then((result) => {
       if (result.length <= 0) {
         populateDatabase();
+        fetchData();
       }
     });
-
     fetchData();
   }, []);
   // * --------------------------------------------
@@ -82,10 +81,7 @@ export default function Home({ searchParams }) {
       <Search />
 
       <Suspense key={searchParams} fallback={<Loading />}>
-        <EventTable
-          eventsRowList={eventData}
-          searchQuery={query}
-        />
+        <EventTable eventsRowList={eventData} searchQuery={query} />
       </Suspense>
     </>
   );
