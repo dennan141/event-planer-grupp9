@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Loading from "../Loading/Loading";
+import Search from "../Search/SearchList";
 
-export default function EventTable({ eventsRowList }) {
+export default function EventTable({ eventsRowList, searchQuery }) {
   const router = useRouter();
 
   // ! -----------------------------
@@ -20,6 +22,7 @@ export default function EventTable({ eventsRowList }) {
     router.push(`/event/${event.id}`);
   };
 
+
   const handleKeyDown = (event, id) => {
     if (event.key === "Enter") {
       sortingFunc(id);
@@ -31,6 +34,7 @@ export default function EventTable({ eventsRowList }) {
     router.push(`/event/${id}`);
     }
   };
+
   //* -----------------------------
   //* SORTING
 
@@ -40,7 +44,17 @@ export default function EventTable({ eventsRowList }) {
 
   useEffect(() => {
     setIsLoading(true);
-    let sortedEvents = [...eventsRowList];
+    let sortedEvents = [];
+
+    if (searchQuery === "") {
+      sortedEvents = [...eventsRowList];
+    } else {
+      const filteredList = eventsRowList.filter((event) =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      sortedEvents = filteredList;
+    }
+
     setSortChoice(sessionStorage.getItem("sortChoice"));
     setOrder(sessionStorage.getItem("sortOrder"));
 
@@ -74,8 +88,9 @@ export default function EventTable({ eventsRowList }) {
       setSortedEventsList(sortedEvents.reverse());
     }
     setSortedEventsList(sortedEvents);
+
     setIsLoading(false);
-  }, [sortChoice, order, eventsRowList]);
+  }, [sortChoice, order, eventsRowList, searchQuery]);
 
   const sortingFunc = (id) => {
     switch (id) {
@@ -104,6 +119,7 @@ export default function EventTable({ eventsRowList }) {
       sessionStorage.setItem("sortOrder", "asc");
     } else sessionStorage.setItem("sortOrder", "des");
   };
+
   //* END OF SORTING
   //* -----------------------------
 
@@ -111,9 +127,7 @@ export default function EventTable({ eventsRowList }) {
   //? RENDERING OF TABLE FOR ALL EVENTS
   return (
     <div className="overflow-x-auto">
-      {isLoading && (
-        <div className="loading loading-spinner loading-lg text-primary mx-auto flex justify-center"></div>
-      )}
+      <Loading isLoading={isLoading} />
       <table className="table">
         {/* head */}
         <thead>
@@ -122,9 +136,11 @@ export default function EventTable({ eventsRowList }) {
             <th
               id="idHeader"
               onClick={() => sortingFunc("idHeader")}
+
               onKeyDown={(e) => handleKeyDown(e, "idHeader")}
-              className="cursor-pointer"
+              className="cursor-pointer text text-gray-200"
               tabIndex="0"
+
             >
               ID{" "}
               {sortChoice === "idHeader" ? (order === "asc" ? "🔼" : "🔽") : ""}
@@ -133,9 +149,11 @@ export default function EventTable({ eventsRowList }) {
             <th
               id="titleHeader"
               onClick={() => sortingFunc("titleHeader")}
+
               onKeyDown={(e) => handleKeyDown(e, "titleHeader")}
-              className="cursor-pointer"
+              className="cursor-pointer text text-gray-200"
               tabIndex="0"
+
             >
               Titel{" "}
               {sortChoice === "titleHeader"
@@ -148,8 +166,9 @@ export default function EventTable({ eventsRowList }) {
             <th
               id="dateHeader"
               onClick={() => sortingFunc("dateHeader")}
+
               onKeyDown={(e) => handleKeyDown(e, "dateHeader")}
-              className="cursor-pointer"
+               className="cursor-pointer text text-gray-200"
               tabIndex="0"
             >
               Datum{" "}
@@ -159,10 +178,11 @@ export default function EventTable({ eventsRowList }) {
                   : "🔽"
                 : ""}
             </th>
-            <th>Beskrivning</th>
+            <th className="text text-gray-200">Beskrivning</th>
           </tr>
         </thead>
         <tbody>
+
           {sortedEventsList.map((event) => (
             <tr
               key={event.id}
@@ -177,6 +197,24 @@ export default function EventTable({ eventsRowList }) {
               <td>{event.description}</td>
             </tr>
           ))}
+
+          {sortedEventsList.length > 0
+            ? sortedEventsList.map((event) => (
+                <tr
+                  key={event.id}
+                  className="hover cursor-pointer  text text-white font-monospace"
+                  onClick={() => handleRowClick(event)}
+                  onKeyDown={(e) => navigateToEvent(event.id)}
+                  tabIndex="0" 
+                >
+                  <td>{event.id}</td>
+                  <td>{event.title}</td>
+                  <td>{event.date}</td>
+                  <td>{event.description}</td>
+                </tr>
+              ))
+            : null}
+
         </tbody>
       </table>
     </div>

@@ -156,7 +156,7 @@ export default function Form() {
       </div>
       {/* DATE TIME */}
       <div>
-        <label className="label" htmlFor="Description">
+        <label className="label" htmlFor="Date">
           Datum
         </label>
         <input

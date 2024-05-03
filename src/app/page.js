@@ -1,20 +1,30 @@
 "use client";
 import "/tailwind.css";
-import EventTable from "@/Components/Events/EventsTable";
-import { useEffect, useState } from "react";
+
+
+import { Suspense, useEffect, useState, lazy} from "react";
 import * as Database from "@/Components/IndexedDb/Database";
 import { useRouter } from "next/navigation";
 import populateDatabase from "@/Components/IndexedDb/PopulateDatabase/PopulateDatabase";
+import Search from "@/Components/Search/SearchBar";
+import Loading from "@/Components/Loading/Loading";
 
-export default function Home() {
+const EventTable = lazy(() => import("@/Components/Events/EventsTable"));
+
+
+export default function Home({ searchParams }) {
   const router = useRouter();
   const [eventData, setEventData] = useState([]);
   const [latestActivity, setLatestActivity] = useState(null);
+  const query = searchParams?.query ?? '';
 
+
+  //TODO: #32 Consider chagning this to component as well.
+  // * ---------- POPULATE WITH DATA --------------
   useEffect(() => {
     async function fetchData() {
       setEventData(await Database.getAllEvents());
-      console.log(eventData)
+      console.log(eventData);
 
       // Fetch latest activity
       const latestActivityData = sessionStorage.getItem("latestActivity");
@@ -32,13 +42,16 @@ export default function Home() {
 
     fetchData();
   }, []);
+  // * --------------------------------------------
 
+  // * --------------- LATEST ACTIVITY -------------
   const handleLatestActivityClick = () => {
-    console.log("In handler: " + latestActivity)
+    console.log("In handler: " + latestActivity);
     if (latestActivity) {
       router.push(`/event/${latestActivity.id}`);
     }
   };
+  // * --------------------------------------------
 
   return (
     <>
@@ -66,8 +79,14 @@ export default function Home() {
           </table>
         </div>
       )}
+      <Search />
 
-      <EventTable eventsRowList={eventData} />
+      <Suspense key={searchParams} fallback={<Loading />}>
+        <EventTable
+          eventsRowList={eventData}
+          searchQuery={query}
+        />
+      </Suspense>
     </>
   );
 }
