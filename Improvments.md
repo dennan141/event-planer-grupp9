@@ -19,6 +19,7 @@
 - Pages can be navigated using only the keyboard.
 - Color-contrast has been rasied to high contrast. 
 - Forms now has correct labels for screen readers. 
+- Aria tags have been added, ONLY where necessary instead of semantic HTML.
 
 ## Moved things 🚛
 
