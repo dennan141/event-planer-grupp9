@@ -30,7 +30,7 @@ const Search = () => {
           name="search"
           type="text"
           placeholder="Sök efter titel..."
-          className="input input-bordered w-full flex max-w-xs"
+          className="input input-bordered input-primary input-md w-full flex max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
           value={query}
         />

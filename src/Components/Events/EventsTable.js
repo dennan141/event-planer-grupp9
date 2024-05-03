@@ -31,13 +31,11 @@ export default function EventTable({ eventsRowList, searchQuery }) {
     setSortedEventsList([...eventsRowList]);
   }, [eventsRowList]);
 
-
-  
   useEffect(() => {
     setIsLoading(true);
     let sortedEvents = [];
 
-    if (searchQuery === '') {
+    if (searchQuery === "") {
       sortedEvents = [...eventsRowList];
     } else {
       const filteredList = eventsRowList.filter((event) =>
@@ -127,7 +125,7 @@ export default function EventTable({ eventsRowList, searchQuery }) {
             <th
               id="idHeader"
               onClick={() => sortingFunc("idHeader")}
-              className="cursor-pointer"
+              className="cursor-pointer text text-gray-200"
             >
               ID{" "}
               {sortChoice === "idHeader" ? (order === "asc" ? "🔼" : "🔽") : ""}
@@ -136,16 +134,20 @@ export default function EventTable({ eventsRowList, searchQuery }) {
             <th
               id="titleHeader"
               onClick={() => sortingFunc("titleHeader")}
-              className="cursor-pointer"
+              className="cursor-pointer text text-gray-200"
             >
               Titel{" "}
-              {sortChoice === "titleHeader" ? order === "asc" ? "🔼" : "🔽" : ""}
+              {sortChoice === "titleHeader"
+                ? order === "asc"
+                  ? "🔼"
+                  : "🔽"
+                : ""}
             </th>
             {/* DATE */}
             <th
               id="dateHeader"
               onClick={() => sortingFunc("dateHeader")}
-              className="cursor-pointer"
+              className="cursor-pointer text text-gray-200"
             >
               Datum{" "}
               {sortChoice === "dateHeader"
@@ -154,7 +156,7 @@ export default function EventTable({ eventsRowList, searchQuery }) {
                   : "🔽"
                 : ""}
             </th>
-            <th>Beskrivning</th>
+            <th className="text text-gray-200">Beskrivning</th>
           </tr>
         </thead>
         <tbody>
@@ -162,7 +164,7 @@ export default function EventTable({ eventsRowList, searchQuery }) {
             ? sortedEventsList.map((event) => (
                 <tr
                   key={event.id}
-                  className="hover cursor-pointer"
+                  className="hover cursor-pointer  text text-white font-monospace"
                   onClick={() => handleRowClick(event)}
                 >
                   <td>{event.id}</td>
