@@ -2,6 +2,8 @@
 
 ## Getting Started 🏃
 
+> **_NOTE:_** ⚠️ Please clone the branch "Assigment_5_Master" for the latest branch.
+
 To start please run these commands from the VsCode console:
 
 ```bash
@@ -41,13 +43,17 @@ The challenges of this project were many but mainly consisted of not knowing whe
 
 ## Future improvements 🛠️
 
-- Search bar
+- Search bar ✅ DONE
   By adding a search bar it can really simplify finding events from the home page after many events has been created.
-- Calender
+
+- Calender 🛠️
   Displaying the events in a calender creates a more visual way for the user to see their events.
-- Improve loading and page speed
+
+- Improve loading and page speed ✅ DONE
   Using small amounts of data is accepteable for now but for future focusing on page loadig speed should be a priority.
-- Visuals
+
+- Visuals 🛠️ Still needs fixing more.
   Page is acceptable but small amount of thought have gone into UI/UX and more is needed as project expands.
-- Semantic HTML and accesebility
+
+- Semantic HTML and accesebility ✅ DONE
   Needs adding
