@@ -1,12 +1,16 @@
 "use client";
 import "/tailwind.css";
-import EventTable from "@/Components/Events/EventsTable";
-import { Suspense, useEffect, useState } from "react";
+
+
+import { Suspense, useEffect, useState, lazy} from "react";
 import * as Database from "@/Components/IndexedDb/Database";
 import { useRouter } from "next/navigation";
 import populateDatabase from "@/Components/IndexedDb/PopulateDatabase/PopulateDatabase";
 import Search from "@/Components/Search/SearchBar";
 import Loading from "@/Components/Loading/Loading";
+
+const EventTable = lazy(() => import("@/Components/Events/EventsTable"));
+
 
 export default function Home({ searchParams }) {
   const router = useRouter();
