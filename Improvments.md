@@ -33,6 +33,6 @@ After the pages contrast was raised together with creating an easily navigated p
 
 This together with an dynamic validation on the length of text which made it much simpler for our users to know when they passed the upper text limit instead of being informed of this once they tried to submit. 
 
-A dynamic search also allowed users to search for the title of the events all while keeping their sorting order. This created simplified the ability to quickly organize and find the wanted events instead of looking through them individually each time. 
+A dynamic search also allowed users to search for the title of the events all while keeping their sorting order. This simplified the ability to quickly organize and find the wanted events instead of looking through them individually each time. 
 
 This should hopefully create a more enjoyable experience for our users. 
