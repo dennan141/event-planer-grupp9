@@ -13,6 +13,8 @@
 
 - Lazy loading on the events table on the home page. 
 
+- No data was displayed on first load. Data was fetched async in wrong order when populating the IndexedDB. - FIXED -
+
 
 
 - #### WCAG 2.1 compliant 👨‍🦯
