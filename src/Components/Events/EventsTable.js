@@ -22,7 +22,18 @@ export default function EventTable({ eventsRowList, searchQuery }) {
     router.push(`/event/${event.id}`);
   };
 
-  //TODO: #31 Make Component
+
+  const handleKeyDown = (event, id) => {
+    if (event.key === "Enter") {
+      sortingFunc(id);
+    }
+  };
+
+  const navigateToEvent = (id) => {
+    if (event.key === "Enter") {
+    router.push(`/event/${id}`);
+    }
+  };
 
   //* -----------------------------
   //* SORTING
@@ -125,7 +136,11 @@ export default function EventTable({ eventsRowList, searchQuery }) {
             <th
               id="idHeader"
               onClick={() => sortingFunc("idHeader")}
+
+              onKeyDown={(e) => handleKeyDown(e, "idHeader")}
               className="cursor-pointer text text-gray-200"
+              tabIndex="0"
+
             >
               ID{" "}
               {sortChoice === "idHeader" ? (order === "asc" ? "🔼" : "🔽") : ""}
@@ -134,7 +149,11 @@ export default function EventTable({ eventsRowList, searchQuery }) {
             <th
               id="titleHeader"
               onClick={() => sortingFunc("titleHeader")}
+
+              onKeyDown={(e) => handleKeyDown(e, "titleHeader")}
               className="cursor-pointer text text-gray-200"
+              tabIndex="0"
+
             >
               Titel{" "}
               {sortChoice === "titleHeader"
@@ -147,7 +166,10 @@ export default function EventTable({ eventsRowList, searchQuery }) {
             <th
               id="dateHeader"
               onClick={() => sortingFunc("dateHeader")}
-              className="cursor-pointer text text-gray-200"
+
+              onKeyDown={(e) => handleKeyDown(e, "dateHeader")}
+               className="cursor-pointer text text-gray-200"
+              tabIndex="0"
             >
               Datum{" "}
               {sortChoice === "dateHeader"
@@ -160,12 +182,30 @@ export default function EventTable({ eventsRowList, searchQuery }) {
           </tr>
         </thead>
         <tbody>
+
+          {sortedEventsList.map((event) => (
+            <tr
+              key={event.id}
+              className="hover cursor-pointer"
+              onClick={() => handleRowClick(event)}
+              onKeyDown={(e) => navigateToEvent(event.id)}
+              tabIndex="0" 
+            >
+              <td>{event.id}</td>
+              <td>{event.title}</td>
+              <td >{event.date}</td>
+              <td>{event.description}</td>
+            </tr>
+          ))}
+
           {sortedEventsList.length > 0
             ? sortedEventsList.map((event) => (
                 <tr
                   key={event.id}
                   className="hover cursor-pointer  text text-white font-monospace"
                   onClick={() => handleRowClick(event)}
+                  onKeyDown={(e) => navigateToEvent(event.id)}
+                  tabIndex="0" 
                 >
                   <td>{event.id}</td>
                   <td>{event.title}</td>
@@ -174,6 +214,7 @@ export default function EventTable({ eventsRowList, searchQuery }) {
                 </tr>
               ))
             : null}
+
         </tbody>
       </table>
     </div>
